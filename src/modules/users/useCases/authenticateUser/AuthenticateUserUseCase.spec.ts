@@ -43,4 +43,4 @@ describe("Authenticate User", () => {
       await authenticateUserCase.execute({ email: "john.doe@test.com", password: "incorrectPassword" });
     }).rejects.toBeInstanceOf(IncorrectEmailOrPasswordError);
   });
-})
+});
