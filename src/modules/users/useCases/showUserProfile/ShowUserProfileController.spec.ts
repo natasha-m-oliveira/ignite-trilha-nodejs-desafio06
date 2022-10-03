@@ -3,7 +3,6 @@ import { Connection, createConnection } from 'typeorm';
 import { app } from '../../../../app';
 
 let connection: Connection;
-
 describe("Show User Profile", () => {
   beforeAll(async () => {
     connection = await createConnection();

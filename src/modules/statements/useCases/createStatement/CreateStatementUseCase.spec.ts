@@ -61,4 +61,4 @@ describe("Create Statement", () => {
       });
     }).rejects.toEqual(new CreateStatementError.UserNotFound);
   });
-})
+});
