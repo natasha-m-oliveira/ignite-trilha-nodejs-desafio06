@@ -1,3 +1,4 @@
+import { Statement } from "@modules/statements/entities/Statement";
 import {
   Column,
   CreateDateColumn,
@@ -6,8 +7,6 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-
-import { Statement } from "../../statements/entities/Statement";
 
 @Entity("users")
 export class User {

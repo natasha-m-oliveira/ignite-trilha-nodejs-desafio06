@@ -1,9 +1,9 @@
+import auth from "@config/auth";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { inject, injectable } from "tsyringe";
 
-import authConfig from "../../../../config/auth";
-import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { IAuthenticateUserResponseDTO } from "./IAuthenticateUserResponseDTO";
 import { IncorrectEmailOrPasswordError } from "./IncorrectEmailOrPasswordError";
 
@@ -35,7 +35,7 @@ export class AuthenticateUserUseCase {
       throw new IncorrectEmailOrPasswordError();
     }
 
-    const { secret, expiresIn } = authConfig.jwt;
+    const { secret, expiresIn } = auth.jwt;
 
     const token = sign({ user }, secret, {
       subject: user.id,

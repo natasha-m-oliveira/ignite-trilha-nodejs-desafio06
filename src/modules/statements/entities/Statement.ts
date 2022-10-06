@@ -1,3 +1,4 @@
+import { User } from "@modules/users/entities/User";
 import {
   Column,
   CreateDateColumn,
@@ -7,8 +8,6 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid";
-
-import { User } from "../../users/entities/User";
 
 enum OperationType {
   DEPOSIT = "deposit",

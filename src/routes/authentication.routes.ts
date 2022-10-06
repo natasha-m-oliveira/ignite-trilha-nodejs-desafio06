@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { AuthenticateUserController } from "@modules/users/useCases/authenticateUser/AuthenticateUserController";
 import { Router } from "express";
-
-import { AuthenticateUserController } from "../modules/users/useCases/authenticateUser/AuthenticateUserController";
 
 const authenticationRouter = Router();
 const authenticateUserController = new AuthenticateUserController();

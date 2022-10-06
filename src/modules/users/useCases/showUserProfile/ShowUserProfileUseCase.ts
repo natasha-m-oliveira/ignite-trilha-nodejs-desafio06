@@ -1,7 +1,7 @@
+import { User } from "@modules/users/entities/User";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { injectable, inject } from "tsyringe";
 
-import { User } from "../../entities/User";
-import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { ShowUserProfileError } from "./ShowUserProfileError";
 
 @injectable()

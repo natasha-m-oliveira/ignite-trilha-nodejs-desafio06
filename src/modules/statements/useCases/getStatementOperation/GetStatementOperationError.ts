@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { AppError } from "../../../../shared/errors/AppError";
+
+import { AppError } from "@shared/errors/AppError";
 
 export namespace GetStatementOperationError {
   export class UserNotFound extends AppError {

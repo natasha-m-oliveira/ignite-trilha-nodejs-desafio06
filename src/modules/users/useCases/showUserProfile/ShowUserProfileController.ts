@@ -1,7 +1,7 @@
+import { ProfileMap } from "@modules/users/mappers/ProfileMap";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { ProfileMap } from "../../mappers/ProfileMap";
 import { ShowUserProfileUseCase } from "./ShowUserProfileUseCase";
 
 export class ShowUserProfileController {

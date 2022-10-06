@@ -1,8 +1,8 @@
+import { User } from "@modules/users/entities/User";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { hash } from "bcryptjs";
 import { inject, injectable } from "tsyringe";
 
-import { User } from "../../entities/User";
-import { IUsersRepository } from "../../repositories/IUsersRepository";
 import { CreateUserError } from "./CreateUserError";
 import { ICreateUserDTO } from "./ICreateUserDTO";
 

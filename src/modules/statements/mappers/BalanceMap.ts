@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
+
 import { Statement } from "../entities/Statement";
 
 interface IRequest {

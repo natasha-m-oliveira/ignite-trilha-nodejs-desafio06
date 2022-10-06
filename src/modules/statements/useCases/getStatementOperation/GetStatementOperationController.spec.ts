@@ -1,7 +1,6 @@
+import { app } from "@/app";
 import request from "supertest";
 import { Connection, createConnection } from "typeorm";
-
-import { app } from "../../../../app";
 
 let connection: Connection;
 let token: string;
