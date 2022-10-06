@@ -1,6 +1,7 @@
 import request from "supertest";
-import { Connection, createConnection } from 'typeorm';
-import { app } from '../../../../app';
+import { Connection, createConnection } from "typeorm";
+
+import { app } from "../../../../app";
 
 let connection: Connection;
 describe("Authenticate User", () => {
@@ -11,7 +12,7 @@ describe("Authenticate User", () => {
     await request(app).post("/api/v1/users").send({
       email: "john.doe@test.com",
       password: "123",
-      name: "John Doe"
+      name: "John Doe",
     });
   });
 
@@ -23,7 +24,7 @@ describe("Authenticate User", () => {
   it("should be able to authenticate an user", async () => {
     const response = await request(app).post("/api/v1/sessions").send({
       email: "john.doe@test.com",
-      password: "123"
+      password: "123",
     });
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("token");
@@ -32,7 +33,7 @@ describe("Authenticate User", () => {
   it("should not be able to authenticate an nonexistent user", async () => {
     const response = await request(app).post("/api/v1/sessions").send({
       email: "nonexistent.user@test.com",
-      password: "123"
+      password: "123",
     });
     expect(response.status).toBe(401);
   });
@@ -40,7 +41,7 @@ describe("Authenticate User", () => {
   it("should not be able to authenticate a user with incorrect credentials", async () => {
     const response = await request(app).post("/api/v1/sessions").send({
       email: "john.doe@test.com",
-      password: "incorrectPassword"
+      password: "incorrectPassword",
     });
     expect(response.status).toBe(401);
   });

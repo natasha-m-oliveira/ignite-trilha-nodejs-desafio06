@@ -1,6 +1,7 @@
 import request from "supertest";
-import { Connection, createConnection } from 'typeorm';
-import { app } from '../../../../app';
+import { Connection, createConnection } from "typeorm";
+
+import { app } from "../../../../app";
 
 let connection: Connection;
 describe("Create User", () => {
@@ -18,7 +19,7 @@ describe("Create User", () => {
     const response = await request(app).post("/api/v1/users").send({
       email: "john.doe@test.com",
       password: "123",
-      name: "John Doe"
+      name: "John Doe",
     });
 
     expect(response.status).toBe(201);
@@ -28,9 +29,9 @@ describe("Create User", () => {
     const response = await request(app).post("/api/v1/users").send({
       email: "john.doe@test.com",
       password: "123",
-      name: "John Doe"
+      name: "John Doe",
     });
 
     expect(response.status).toBe(400);
   });
-})
+});

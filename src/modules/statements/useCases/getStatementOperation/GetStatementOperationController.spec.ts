@@ -1,6 +1,7 @@
 import request from "supertest";
-import { Connection, createConnection } from 'typeorm';
-import { app } from '../../../../app';
+import { Connection, createConnection } from "typeorm";
+
+import { app } from "../../../../app";
 
 let connection: Connection;
 let token: string;
@@ -12,12 +13,12 @@ describe("Get Statement Operation", () => {
     await request(app).post("/api/v1/users").send({
       email: "john.doe@test.com",
       password: "123",
-      name: "John Doe"
+      name: "John Doe",
     });
 
     const responseToken = await request(app).post("/api/v1/sessions").send({
       email: "john.doe@test.com",
-      password: "123"
+      password: "123",
     });
 
     token = responseToken.body.token;
@@ -33,16 +34,19 @@ describe("Get Statement Operation", () => {
       .post("/api/v1/statements/deposit")
       .send({
         amount: 100,
-        description: "Event"
-      }).set({
+        description: "Event",
+      })
+      .set({
         Authorization: `Bearer ${token}`,
       });
 
-    const { id } = responseStatement.body;
+    const id: string = responseStatement.body.id;
 
-    const response = await request(app).get(`/api/v1/statements/${id}`).set({
-      Authorization: `Bearer ${token}`,
-    });
+    const response = await request(app)
+      .get(`/api/v1/statements/${id}`)
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
 
     expect(response.status).toBe(200);
     expect(response.body.amount).toBe("100.00");
@@ -50,9 +54,11 @@ describe("Get Statement Operation", () => {
   });
 
   it("should not be able to get non-existent statement operation", async () => {
-    const response = await request(app).get(`/api/v1/statements/1`).set({
-      Authorization: `Bearer ${token}`,
-    });
+    const response = await request(app)
+      .get(`/api/v1/statements/1`)
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
 
     // Erro ao pesquisar no banco, Internal server error - invalid input syntax for type uuid: "1"
     // por isso a validação do erro aponta para 500 ao invés de 404
