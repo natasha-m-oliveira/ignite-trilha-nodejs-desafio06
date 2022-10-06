@@ -1,6 +1,6 @@
+import { app } from "@/app";
 import request from "supertest";
-import { Connection, createConnection } from 'typeorm';
-import { app } from '../../../../app';
+import { Connection, createConnection } from "typeorm";
 
 let connection: Connection;
 describe("Get Balance", () => {
@@ -11,7 +11,7 @@ describe("Get Balance", () => {
     await request(app).post("/api/v1/users").send({
       email: "john.doe@test.com",
       password: "123",
-      name: "John Doe"
+      name: "John Doe",
     });
   });
 
@@ -23,17 +23,18 @@ describe("Get Balance", () => {
   it("should be able to get balance", async () => {
     const responseToken = await request(app).post("/api/v1/sessions").send({
       email: "john.doe@test.com",
-      password: "123"
+      password: "123",
     });
 
-    const { token } = responseToken.body;
+    const token: string = responseToken.body.token;
 
     await request(app)
       .post("/api/v1/statements/deposit")
       .send({
         amount: 100,
-        description: "Event"
-      }).set({
+        description: "Event",
+      })
+      .set({
         Authorization: `Bearer ${token}`,
       });
 
@@ -41,14 +42,17 @@ describe("Get Balance", () => {
       .post("/api/v1/statements/withdraw")
       .send({
         amount: 25,
-        description: "Bills"
-      }).set({
+        description: "Bills",
+      })
+      .set({
         Authorization: `Bearer ${token}`,
       });
 
-    const response = await request(app).get("/api/v1/statements/balance").set({
-      Authorization: `Bearer ${token}`,
-    });
+    const response = await request(app)
+      .get("/api/v1/statements/balance")
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("statement");
@@ -63,5 +67,5 @@ describe("Get Balance", () => {
     });
 
     expect(response.status).toBe(401);
-  })
+  });
 });

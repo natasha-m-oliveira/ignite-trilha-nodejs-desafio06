@@ -1,6 +1,6 @@
+import { app } from "@/app";
 import request from "supertest";
-import { Connection, createConnection } from 'typeorm';
-import { app } from '../../../../app';
+import { Connection, createConnection } from "typeorm";
 
 let connection: Connection;
 describe("Show User Profile", () => {
@@ -11,7 +11,7 @@ describe("Show User Profile", () => {
     await request(app).post("/api/v1/users").send({
       email: "john.doe@test.com",
       password: "123",
-      name: "John Doe"
+      name: "John Doe",
     });
   });
 
@@ -23,13 +23,15 @@ describe("Show User Profile", () => {
   it("should be able to show the user's profile", async () => {
     const responseToken = await request(app).post("/api/v1/sessions").send({
       email: "john.doe@test.com",
-      password: "123"
+      password: "123",
     });
 
     const { token } = responseToken.body;
-    const response = await request(app).get("/api/v1/profile").set({
-      Authorization: `Bearer ${token as string}`,
-    });
+    const response = await request(app)
+      .get("/api/v1/profile")
+      .set({
+        Authorization: `Bearer ${token as string}`,
+      });
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id");

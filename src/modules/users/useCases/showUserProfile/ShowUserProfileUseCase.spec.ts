@@ -1,7 +1,8 @@
-import { InMemoryUsersRepository } from '../../repositories/in-memory/InMemoryUsersRepository';
-import { CreateUserUseCase } from '../createUser/CreateUserUseCase';
-import { ShowUserProfileError } from './ShowUserProfileError';
-import { ShowUserProfileUseCase } from './ShowUserProfileUseCase';
+import { InMemoryUsersRepository } from "@modules/users/repositories/in-memory/InMemoryUsersRepository";
+
+import { CreateUserUseCase } from "../createUser/CreateUserUseCase";
+import { ShowUserProfileError } from "./ShowUserProfileError";
+import { ShowUserProfileUseCase } from "./ShowUserProfileUseCase";
 
 let usersRepository: InMemoryUsersRepository;
 let showUserProfileUseCase: ShowUserProfileUseCase;
@@ -18,9 +19,8 @@ describe("Show User Profile", () => {
     const user = await createUserUseCase.execute({
       email: "john.doe@test.com",
       password: "123",
-      name: "John Doe"
+      name: "John Doe",
     });
-
 
     const result = await showUserProfileUseCase.execute(user.id as string);
 
@@ -28,9 +28,9 @@ describe("Show User Profile", () => {
     expect(result.email).toEqual("john.doe@test.com");
   });
 
-  it("should not be able to show the user's profile", () => {
-    expect(async () => {
-      await showUserProfileUseCase.execute("test");
-    }).rejects.toBeInstanceOf(ShowUserProfileError);
+  it("should not be able to show the user's profile", async () => {
+    await expect(showUserProfileUseCase.execute("test")).rejects.toBeInstanceOf(
+      ShowUserProfileError
+    );
   });
 });

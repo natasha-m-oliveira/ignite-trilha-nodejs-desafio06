@@ -1,32 +1,40 @@
+import { Statement } from "@modules/statements/entities/Statement";
+import { IStatementsRepository } from "@modules/statements/repositories/IStatementsRepository";
+import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import { inject, injectable } from "tsyringe";
 
-import { IUsersRepository } from "../../../users/repositories/IUsersRepository";
-import { IStatementsRepository } from "../../repositories/IStatementsRepository";
 import { CreateStatementError } from "./CreateStatementError";
 import { ICreateStatementDTO } from "./ICreateStatementDTO";
 
 @injectable()
 export class CreateStatementUseCase {
   constructor(
-    @inject('UsersRepository')
-    private usersRepository: IUsersRepository,
+    @inject("UsersRepository")
+    private readonly usersRepository: IUsersRepository,
 
-    @inject('StatementsRepository')
-    private statementsRepository: IStatementsRepository
+    @inject("StatementsRepository")
+    private readonly statementsRepository: IStatementsRepository
   ) {}
 
-  async execute({ user_id, type, amount, description }: ICreateStatementDTO) {
+  async execute({
+    user_id,
+    type,
+    amount,
+    description,
+  }: ICreateStatementDTO): Promise<Statement> {
     const user = await this.usersRepository.findById(user_id);
 
-    if(!user) {
+    if (!user) {
       throw new CreateStatementError.UserNotFound();
     }
 
-    if(type === 'withdraw') {
-      const { balance } = await this.statementsRepository.getUserBalance({ user_id });
+    if (type === "withdraw") {
+      const { balance } = await this.statementsRepository.getUserBalance({
+        user_id,
+      });
 
       if (balance < amount) {
-        throw new CreateStatementError.InsufficientFunds()
+        throw new CreateStatementError.InsufficientFunds();
       }
     }
 
@@ -34,7 +42,7 @@ export class CreateStatementUseCase {
       user_id,
       type,
       amount,
-      description
+      description,
     });
 
     return statementOperation;

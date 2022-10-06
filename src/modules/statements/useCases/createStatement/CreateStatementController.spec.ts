@@ -1,6 +1,6 @@
+import { app } from "@/app";
 import request from "supertest";
-import { Connection, createConnection } from 'typeorm';
-import { app } from '../../../../app';
+import { Connection, createConnection } from "typeorm";
 
 let connection: Connection;
 let token: string;
@@ -12,12 +12,12 @@ describe("Create Statement", () => {
     await request(app).post("/api/v1/users").send({
       email: "john.doe@test.com",
       password: "123",
-      name: "John Doe"
+      name: "John Doe",
     });
 
     const responseToken = await request(app).post("/api/v1/sessions").send({
       email: "john.doe@test.com",
-      password: "123"
+      password: "123",
     });
 
     token = responseToken.body.token;
@@ -33,8 +33,9 @@ describe("Create Statement", () => {
       .post("/api/v1/statements/deposit")
       .send({
         amount: 100,
-        description: "Event"
-      }).set({
+        description: "Event",
+      })
+      .set({
         Authorization: `Bearer ${token}`,
       });
 
@@ -48,8 +49,9 @@ describe("Create Statement", () => {
       .post("/api/v1/statements/withdraw")
       .send({
         amount: 25,
-        description: "Bills"
-      }).set({
+        description: "Bills",
+      })
+      .set({
         Authorization: `Bearer ${token}`,
       });
 
@@ -63,8 +65,9 @@ describe("Create Statement", () => {
       .post("/api/v1/statements/withdraw")
       .send({
         amount: 80,
-        description: "Bills"
-      }).set({
+        description: "Bills",
+      })
+      .set({
         Authorization: `Bearer ${token}`,
       });
 
@@ -76,8 +79,9 @@ describe("Create Statement", () => {
       .post("/api/v1/statements/deposit")
       .send({
         amount: 100,
-        description: "Event"
-      }).set({
+        description: "Event",
+      })
+      .set({
         Authorization: `Bearer invalidToken`,
       });
 
