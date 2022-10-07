@@ -29,9 +29,9 @@ describe("Get Statement Operation", () => {
 
   it("should be able to get statement operation", async () => {
     const user = await createUserUseCase.execute({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "mekwo@ovin.ne",
+      password: "938470",
+      name: "Etta Lloyd",
     });
 
     const statement = await createStatementUseCase.execute({
@@ -51,9 +51,9 @@ describe("Get Statement Operation", () => {
 
   it("should not be able to get non-existent statement operation", async () => {
     const user = await createUserUseCase.execute({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "er@pokor.cx",
+      password: "678049",
+      name: "Myrtie Jefferson",
     });
     await expect(
       getStatementOperationUseCase.execute({

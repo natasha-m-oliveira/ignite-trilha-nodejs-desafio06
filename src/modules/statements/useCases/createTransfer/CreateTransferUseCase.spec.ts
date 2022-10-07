@@ -4,6 +4,7 @@ import { InMemoryUsersRepository } from "@modules/users/repositories/in-memory/I
 import { CreateUserUseCase } from "@modules/users/useCases/createUser/CreateUserUseCase";
 
 import { CreateStatementUseCase } from "../createStatement/CreateStatementUseCase";
+import { CreateTransferError } from "./CreateTransferError";
 import { CreateTransferUseCase } from "./CreateTransferUseCase";
 
 let createStatementUseCase: CreateStatementUseCase;
@@ -25,7 +26,8 @@ describe("Create Transfer", () => {
       statementsRepository
     );
   });
-  it("should be able to create a new statement", async () => {
+
+  it("should be able to make a new transfer", async () => {
     const sender = await createUserUseCase.execute({
       email: "ifowhi@riz.sd",
       password: "123",
@@ -52,7 +54,62 @@ describe("Create Transfer", () => {
       description: "Transfer",
     });
 
-    expect(transferVoucher).toHaveProperty("receiver");
     expect(transferVoucher).toHaveProperty("sender");
+    expect(transferVoucher).toHaveProperty("receiver");
+    expect(transferVoucher.sender.amount).toBe(transferVoucher.receiver.amount);
+  });
+
+  it("should not be able to make a transfer to yourself", async () => {
+    const sender = await createUserUseCase.execute({
+      email: "we@cira.hu",
+      password: "483040",
+      name: "Rodney Delgado",
+    });
+
+    await createStatementUseCase.execute({
+      user_id: sender.id as string,
+      type: "deposit" as OperationType,
+      amount: 874,
+      description: "Payment",
+    });
+
+    await expect(
+      createTransferUseCase.execute({
+        sender_id: sender.id as string,
+        receiver_id: sender.id as string,
+        amount: 819,
+        description: "Transfer",
+      })
+    ).rejects.toEqual(new CreateTransferError.ReceiverNotfound());
+  });
+
+  it("should not be able to transfer an amount greater than the current account balance", async () => {
+    const sender = await createUserUseCase.execute({
+      email: "sudotej@maf.gy",
+      password: "489292",
+      name: "Lenora Chapman",
+    });
+
+    const receiver = await createUserUseCase.execute({
+      email: "socdusit@pa.vi",
+      password: "587158",
+      name: "Jack Holmes",
+    });
+
+    await createStatementUseCase.execute({
+      user_id: sender.id as string,
+      type: "deposit" as OperationType,
+      amount: 994,
+      description: "Payment",
+    });
+
+    await expect(
+      createTransferUseCase.execute({
+        sender_id: sender.id as string,
+        receiver_id: receiver.id as string,
+        amount: 1943,
+        description: "Transfer",
+      })
+    ).rejects.toEqual(new CreateTransferError.InsufficientFunds());
   });
 });

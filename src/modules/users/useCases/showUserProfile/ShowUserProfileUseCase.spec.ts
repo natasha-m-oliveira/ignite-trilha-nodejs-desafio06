@@ -17,15 +17,15 @@ describe("Show User Profile", () => {
 
   it("should be able to show the user's profile", async () => {
     const user = await createUserUseCase.execute({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "hit@lidzakto.kp",
+      password: "834550",
+      name: "Leonard Collier",
     });
 
     const result = await showUserProfileUseCase.execute(user.id as string);
 
     expect(result).toHaveProperty("email");
-    expect(result.email).toEqual("john.doe@test.com");
+    expect(result.email).toEqual("hit@lidzakto.kp");
   });
 
   it("should not be able to show the user's profile", async () => {

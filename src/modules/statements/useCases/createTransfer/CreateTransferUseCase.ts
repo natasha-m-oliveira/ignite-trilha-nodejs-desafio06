@@ -9,7 +9,7 @@ import { inject, injectable } from "tsyringe";
 import { CreateTransferError } from "./CreateTransferError";
 import { ICreateTransferDTO } from "./ICreateTransferDTO";
 
-interface ITransferVoucher {
+interface IResponse {
   sender: Statement;
   receiver: Statement;
 }
@@ -29,7 +29,7 @@ export class CreateTransferUseCase {
     receiver_id,
     amount,
     description,
-  }: ICreateTransferDTO): Promise<ITransferVoucher> {
+  }: ICreateTransferDTO): Promise<IResponse> {
     const sender = await this.usersRepository.findById(sender_id);
 
     if (!sender || sender_id === receiver_id) {

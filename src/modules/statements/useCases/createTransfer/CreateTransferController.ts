@@ -15,6 +15,6 @@ export class CreateTransferController {
       amount,
       description,
     });
-    return response.status(201).json(transferVoucher);
+    return response.status(201).json(transferVoucher.sender);
   }
 }

@@ -30,7 +30,7 @@ describe("Create Transfer", () => {
     await connection.close();
   });
 
-  it("should be able to create a new transfer statement", async () => {
+  it("should be able to make a new transfer", async () => {
     await request(app)
       .post("/api/v1/statements/deposit")
       .send({
@@ -59,8 +59,8 @@ describe("Create Transfer", () => {
       });
 
     expect(response.status).toBe(201);
-    expect(response.body).toHaveProperty("receiver");
-    expect(response.body).toHaveProperty("sender");
+    expect(response.body.receiver_id).toBe(receiver_id);
+    expect(response.body.amount).toBe(521);
   });
 
   it("should not be able to make a transfer to yourself", async () => {

@@ -16,9 +16,9 @@ describe("Create User", () => {
 
   it("should be able to create a new user", async () => {
     const response = await request(app).post("/api/v1/users").send({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "rijezu@duw.nu",
+      password: "658399",
+      name: "Larry Black",
     });
 
     expect(response.status).toBe(201);
@@ -26,9 +26,9 @@ describe("Create User", () => {
 
   it("should not be able to create a new user", async () => {
     const response = await request(app).post("/api/v1/users").send({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "rijezu@duw.nu",
+      password: "406360",
+      name: "Janie Miller",
     });
 
     expect(response.status).toBe(400);
