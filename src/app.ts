@@ -1,14 +1,16 @@
 import "reflect-metadata";
 import "express-async-errors";
 
+import createConnection from "@/database";
 import cors from "cors";
 import express from "express";
 
-import "./database";
 import "./shared/container";
 import { AppError } from "@shared/errors/AppError";
 
 import { router } from "./routes";
+
+void createConnection();
 
 const app = express();
 
