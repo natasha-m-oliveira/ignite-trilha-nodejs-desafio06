@@ -13,9 +13,9 @@ describe("Create User", () => {
 
   it("should be able to create a new user", async () => {
     const user = await createUserUseCase.execute({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "divherama@suwleni.ky",
+      password: "139326",
+      name: "Jean Howell",
     });
 
     expect(user).toHaveProperty("id");
@@ -23,15 +23,15 @@ describe("Create User", () => {
 
   it("should not be able to create a new user", async () => {
     await createUserUseCase.execute({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "wul@jop.gp",
+      password: "464971",
+      name: "Ethel Reid",
     });
     await expect(
       createUserUseCase.execute({
-        email: "john.doe@test.com",
-        password: "123",
-        name: "John Doe2",
+        email: "wul@jop.gp",
+        password: "309439",
+        name: "Herbert Marsh",
       })
     ).rejects.toBeInstanceOf(CreateUserError);
   });

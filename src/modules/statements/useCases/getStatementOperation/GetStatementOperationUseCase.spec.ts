@@ -1,8 +1,8 @@
+import { OperationType } from "@modules/statements/entities/Statement";
 import { InMemoryStatementsRepository } from "@modules/statements/repositories/in-memory/InMemoryStatementsRepository";
 import { InMemoryUsersRepository } from "@modules/users/repositories/in-memory/InMemoryUsersRepository";
 import { CreateUserUseCase } from "@modules/users/useCases/createUser/CreateUserUseCase";
 
-import { OperationType } from "../createStatement/CreateStatementController";
 import { CreateStatementUseCase } from "../createStatement/CreateStatementUseCase";
 import { GetStatementOperationError } from "./GetStatementOperationError";
 import { GetStatementOperationUseCase } from "./GetStatementOperationUseCase";
@@ -29,9 +29,9 @@ describe("Get Statement Operation", () => {
 
   it("should be able to get statement operation", async () => {
     const user = await createUserUseCase.execute({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "mekwo@ovin.ne",
+      password: "938470",
+      name: "Etta Lloyd",
     });
 
     const statement = await createStatementUseCase.execute({
@@ -51,9 +51,9 @@ describe("Get Statement Operation", () => {
 
   it("should not be able to get non-existent statement operation", async () => {
     const user = await createUserUseCase.execute({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "er@pokor.cx",
+      password: "678049",
+      name: "Myrtie Jefferson",
     });
     await expect(
       getStatementOperationUseCase.execute({

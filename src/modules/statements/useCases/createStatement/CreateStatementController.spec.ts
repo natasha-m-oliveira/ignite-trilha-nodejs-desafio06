@@ -10,14 +10,14 @@ describe("Create Statement", () => {
     await connection.runMigrations();
 
     await request(app).post("/api/v1/users").send({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "dac@kilugsi.so",
+      password: "419224",
+      name: "Justin Kelley",
     });
 
     const responseToken = await request(app).post("/api/v1/sessions").send({
-      email: "john.doe@test.com",
-      password: "123",
+      email: "dac@kilugsi.so",
+      password: "419224",
     });
 
     token = responseToken.body.token;

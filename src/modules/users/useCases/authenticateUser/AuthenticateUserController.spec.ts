@@ -9,8 +9,8 @@ describe("Authenticate User", () => {
     await connection.runMigrations();
 
     await request(app).post("/api/v1/users").send({
-      email: "john.doe@test.com",
-      password: "123",
+      email: "reje@jibhise.zm",
+      password: "726686",
       name: "John Doe",
     });
   });
@@ -22,8 +22,8 @@ describe("Authenticate User", () => {
 
   it("should be able to authenticate an user", async () => {
     const response = await request(app).post("/api/v1/sessions").send({
-      email: "john.doe@test.com",
-      password: "123",
+      email: "reje@jibhise.zm",
+      password: "726686",
     });
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("token");
@@ -32,14 +32,14 @@ describe("Authenticate User", () => {
   it("should not be able to authenticate an nonexistent user", async () => {
     const response = await request(app).post("/api/v1/sessions").send({
       email: "nonexistent.user@test.com",
-      password: "123",
+      password: "726686",
     });
     expect(response.status).toBe(401);
   });
 
   it("should not be able to authenticate a user with incorrect credentials", async () => {
     const response = await request(app).post("/api/v1/sessions").send({
-      email: "john.doe@test.com",
+      email: "reje@jibhise.zm",
       password: "incorrectPassword",
     });
     expect(response.status).toBe(401);

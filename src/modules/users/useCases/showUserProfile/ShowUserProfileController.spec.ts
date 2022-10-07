@@ -9,9 +9,9 @@ describe("Show User Profile", () => {
     await connection.runMigrations();
 
     await request(app).post("/api/v1/users").send({
-      email: "john.doe@test.com",
-      password: "123",
-      name: "John Doe",
+      email: "orahifoj@hahetki.gq",
+      password: "539592",
+      name: "Sue Hughes",
     });
   });
 
@@ -22,8 +22,8 @@ describe("Show User Profile", () => {
 
   it("should be able to show the user's profile", async () => {
     const responseToken = await request(app).post("/api/v1/sessions").send({
-      email: "john.doe@test.com",
-      password: "123",
+      email: "orahifoj@hahetki.gq",
+      password: "539592",
     });
 
     const { token } = responseToken.body;
@@ -35,7 +35,7 @@ describe("Show User Profile", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id");
-    expect(response.body.email).toBe("john.doe@test.com");
+    expect(response.body.email).toBe("orahifoj@hahetki.gq");
   });
 
   it("should not be able to show the user's profile", async () => {

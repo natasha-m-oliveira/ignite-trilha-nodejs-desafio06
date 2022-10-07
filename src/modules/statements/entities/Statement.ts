@@ -9,9 +9,10 @@ import {
 } from "typeorm";
 import { v4 as uuid } from "uuid";
 
-enum OperationType {
+export enum OperationType {
   DEPOSIT = "deposit",
   WITHDRAW = "withdraw",
+  TRANSFER = "transfer",
 }
 
 @Entity("statements")
@@ -25,6 +26,12 @@ export class Statement {
   @ManyToOne(() => User, (user) => user.statement)
   @JoinColumn({ name: "user_id" })
   user: User;
+
+  @Column("uuid")
+  receiver_id?: string;
+
+  @Column("uuid")
+  sender_id?: string;
 
   @Column()
   description: string;

@@ -8,21 +8,37 @@ interface IRequest {
 }
 
 interface IBalance {
-  statement: Array<Omit<Statement, "user_id" | "user">>;
+  statement: Array<Omit<Statement, "user_id" | "user" | "receiver_id">>;
   balance: number;
 }
 
 export class BalanceMap {
   static toDTO({ statement, balance }: IRequest): IBalance {
     const parsedStatement = statement.map(
-      ({ id, amount, description, type, created_at, updated_at }) => ({
+      ({
         id,
-        amount: Number(amount),
+        sender_id,
+        amount,
         description,
         type,
         created_at,
         updated_at,
-      })
+      }) => {
+        const statement = {
+          id,
+          amount: Number(amount),
+          description,
+          type,
+          created_at,
+          updated_at,
+        };
+        if (type === "transfer") {
+          Object.assign(statement, {
+            sender_id,
+          });
+        }
+        return statement;
+      }
     );
 
     return {

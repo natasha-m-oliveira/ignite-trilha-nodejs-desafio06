@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 
 import { CreateStatementUseCase } from "./CreateStatementUseCase";
 
-export enum OperationType {
+enum OperationType {
   DEPOSIT = "deposit",
   WITHDRAW = "withdraw",
 }
