@@ -4,55 +4,55 @@ import { InMemoryUsersRepository } from "@modules/users/repositories/in-memory/I
 import { CreateUserUseCase } from "@modules/users/useCases/createUser/CreateUserUseCase";
 
 import { CreateStatementUseCase } from "../createStatement/CreateStatementUseCase";
-import { GetBalanceError } from "./GetBalanceError";
-import { GetBalanceUseCase } from "./GetBalanceUseCase";
+import { CreateTransferUseCase } from "./CreateTransferUseCase";
 
-let getBalanceUseCase: GetBalanceUseCase;
 let createStatementUseCase: CreateStatementUseCase;
 let statementsRepository: InMemoryStatementsRepository;
 let usersRepository: InMemoryUsersRepository;
 let createUserUseCase: CreateUserUseCase;
-describe("Get Balance", () => {
+let createTransferUseCase: CreateTransferUseCase;
+describe("Create Transfer", () => {
   beforeEach(() => {
     statementsRepository = new InMemoryStatementsRepository();
     usersRepository = new InMemoryUsersRepository();
     createUserUseCase = new CreateUserUseCase(usersRepository);
+    createTransferUseCase = new CreateTransferUseCase(
+      usersRepository,
+      statementsRepository
+    );
     createStatementUseCase = new CreateStatementUseCase(
       usersRepository,
       statementsRepository
     );
-    getBalanceUseCase = new GetBalanceUseCase(
-      statementsRepository,
-      usersRepository
-    );
   });
-
-  it("should be able to get balance", async () => {
-    const user = await createUserUseCase.execute({
-      email: "john.doe@test.com",
+  it("should be able to create a new statement", async () => {
+    const sender = await createUserUseCase.execute({
+      email: "ifowhi@riz.sd",
       password: "123",
-      name: "John Doe",
+      name: "Virgie Harper",
+    });
+
+    const receiver = await createUserUseCase.execute({
+      email: "beme@po.ee",
+      password: "123",
+      name: "Francis Obrien",
     });
 
     await createStatementUseCase.execute({
-      user_id: user.id as string,
+      user_id: sender.id as string,
       type: "deposit" as OperationType,
-      amount: 7800,
+      amount: 502,
       description: "Payment",
     });
 
-    const balance = await getBalanceUseCase.execute({
-      user_id: user.id as string,
+    const transferVoucher = await createTransferUseCase.execute({
+      sender_id: sender.id as string,
+      receiver_id: receiver.id as string,
+      amount: 96,
+      description: "Transfer",
     });
 
-    expect(balance).toHaveProperty("statement");
-    expect(balance.statement.length).toBe(1);
-    expect(balance.balance).toBe(7800);
-  });
-
-  it("should not be able to get balance with an nonexistent user", async () => {
-    await expect(
-      getBalanceUseCase.execute({ user_id: "test" })
-    ).rejects.toBeInstanceOf(GetBalanceError);
+    expect(transferVoucher).toHaveProperty("receiver");
+    expect(transferVoucher).toHaveProperty("sender");
   });
 });
