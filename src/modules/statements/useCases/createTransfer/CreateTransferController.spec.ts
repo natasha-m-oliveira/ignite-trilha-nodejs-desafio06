@@ -76,6 +76,19 @@ describe("Create Transfer", () => {
     expect(response.status).toBe(404);
   });
 
+  it("should not be able to transfer an amount negative", async () => {
+    const response = await request(app)
+      .post(`/api/v1/statements/transfers/${user_id}`)
+      .send({
+        amount: -85,
+        description: "Transfer",
+      })
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
+    expect(response.status).toBe(400);
+  });
+
   it("should not be able to transfer an amount greater than the current account balance", async () => {
     const responseReceiver = await request(app).post("/api/v1/users").send({
       email: "zi@hunbipgo.cy",

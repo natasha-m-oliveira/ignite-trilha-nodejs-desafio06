@@ -37,7 +37,7 @@ describe("Get Statement Operation", () => {
     const statement = await createStatementUseCase.execute({
       user_id: user.id as string,
       type: "deposit" as OperationType,
-      amount: 7800,
+      amount: 956,
       description: "Payment",
     });
 

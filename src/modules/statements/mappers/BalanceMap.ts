@@ -26,7 +26,7 @@ export class BalanceMap {
       }) => {
         const statement = {
           id,
-          amount: Number(amount),
+          amount: Number(amount) / 100,
           description,
           type,
           created_at,
@@ -43,7 +43,7 @@ export class BalanceMap {
 
     return {
       statement: parsedStatement,
-      balance: Number(balance),
+      balance: Number(balance) / 100,
     };
   }
 }

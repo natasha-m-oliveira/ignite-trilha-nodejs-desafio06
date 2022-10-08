@@ -147,7 +147,7 @@
             "description": "Operação realizada com sucesso."
           },
           "400": {
-            "description": "Saldo insuficiente."
+            "description": "Saldo insuficiente ou quantia inválida."
           },
           "401": {
             "description": "Token inválido."
@@ -184,7 +184,7 @@
             "description": "Operação realizada com sucesso."
           },
           "400": {
-            "description": "Saldo insuficiente."
+            "description": "Saldo insuficiente ou quantia inválida."
           },
           "401": {
             "description": "Token inválido."
@@ -267,7 +267,7 @@
             "description": "Success"
           },
           "400": {
-            "description": "Saldo insuficiente."
+            "description": "Saldo insuficiente ou quantia inválida."
           },
           "401": {
             "description": "Token inválido."

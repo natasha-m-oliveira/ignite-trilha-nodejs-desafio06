@@ -31,7 +31,7 @@ describe("Create Statement", () => {
     const statement = await createStatementUseCase.execute({
       user_id: user.id as string,
       type: "deposit" as OperationType,
-      amount: 7800,
+      amount: 800,
       description: "Payment",
     });
 
@@ -54,12 +54,23 @@ describe("Create Statement", () => {
     ).rejects.toEqual(new CreateStatementError.InsufficientFunds());
   });
 
+  it("should not be able to create a new statement with an amount negative", async () => {
+    await expect(
+      createStatementUseCase.execute({
+        user_id: "test",
+        type: "withdraw" as OperationType,
+        amount: -685,
+        description: "Withdraw",
+      })
+    ).rejects.toEqual(new CreateStatementError.InvalidAmount());
+  });
+
   it("should not be able to create a new statement with an nonexistent user", async () => {
     await expect(
       createStatementUseCase.execute({
         user_id: "test",
         type: "deposit" as OperationType,
-        amount: 7800,
+        amount: 780,
         description: "Payment",
       })
     ).rejects.toEqual(new CreateStatementError.UserNotFound());

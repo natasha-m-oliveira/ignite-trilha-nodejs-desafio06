@@ -83,6 +83,17 @@ describe("Create Transfer", () => {
     ).rejects.toEqual(new CreateTransferError.ReceiverNotfound());
   });
 
+  it("should not be able to transfer an amount negative", async () => {
+    await expect(
+      createTransferUseCase.execute({
+        sender_id: "test" as string,
+        receiver_id: "test" as string,
+        amount: -5,
+        description: "Transfer",
+      })
+    ).rejects.toEqual(new CreateTransferError.InvalidAmount());
+  });
+
   it("should not be able to transfer an amount greater than the current account balance", async () => {
     const sender = await createUserUseCase.execute({
       email: "sudotej@maf.gy",
@@ -99,7 +110,7 @@ describe("Create Transfer", () => {
     await createStatementUseCase.execute({
       user_id: sender.id as string,
       type: "deposit" as OperationType,
-      amount: 994,
+      amount: 594,
       description: "Payment",
     });
 
@@ -107,7 +118,7 @@ describe("Create Transfer", () => {
       createTransferUseCase.execute({
         sender_id: sender.id as string,
         receiver_id: receiver.id as string,
-        amount: 1943,
+        amount: 900,
         description: "Transfer",
       })
     ).rejects.toEqual(new CreateTransferError.InsufficientFunds());

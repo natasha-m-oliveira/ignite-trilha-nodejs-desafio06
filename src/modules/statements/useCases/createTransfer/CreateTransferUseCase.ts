@@ -30,6 +30,10 @@ export class CreateTransferUseCase {
     amount,
     description,
   }: ICreateTransferDTO): Promise<IResponse> {
+    if (amount <= 0) {
+      throw new CreateTransferError.InvalidAmount();
+    }
+
     const sender = await this.usersRepository.findById(sender_id);
 
     if (!sender || sender_id === receiver_id) {

@@ -21,7 +21,8 @@ describe("Get Balance", () => {
   });
 
   it("should be able to get balance", async () => {
-    const [payment, bills, transfer] = [839, 527, 194];
+    const [payment, bills, transfer] = [839.1, 527.59, 194.99];
+    const calcBalance = (payment * 100 - bills * 100 - transfer * 100) / 100;
 
     const responseToken = await request(app).post("/api/v1/sessions").send({
       email: "miw@re.kr",
@@ -78,7 +79,7 @@ describe("Get Balance", () => {
     expect(response.body).toHaveProperty("statement");
     expect(response.body.statement.length).toBe(3);
     expect(response.body).toHaveProperty("balance");
-    expect(response.body.balance).toBe(payment - bills - transfer);
+    expect(response.body.balance).toBe(calcBalance);
   });
 
   it("should not be able to get balance with an nonexistent user", async () => {

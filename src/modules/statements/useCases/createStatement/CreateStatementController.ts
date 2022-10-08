@@ -1,3 +1,4 @@
+import { StatementMap } from "@modules/statements/mappers/StatementMap";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -21,10 +22,12 @@ export class CreateStatementController {
     const statement = await createStatement.execute({
       user_id,
       type,
-      amount,
+      amount: Number(amount) * 100,
       description,
     });
 
-    return response.status(201).json(statement);
+    const statementDTO = StatementMap.toDTO(statement);
+
+    return response.status(201).json(statementDTO);
   }
 }

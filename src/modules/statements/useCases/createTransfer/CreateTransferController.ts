@@ -1,3 +1,4 @@
+import { StatementMap } from "@modules/statements/mappers/StatementMap";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -12,9 +13,12 @@ export class CreateTransferController {
     const transferVoucher = await createTransferUseCase.execute({
       sender_id,
       receiver_id,
-      amount,
+      amount: Number(amount) * 100,
       description,
     });
-    return response.status(201).json(transferVoucher.sender);
+
+    const statementDTO = StatementMap.toDTO(transferVoucher.sender);
+
+    return response.status(201).json(statementDTO);
   }
 }

@@ -74,6 +74,19 @@ describe("Create Statement", () => {
     expect(response.status).toBe(400);
   });
 
+  it("should not be able to create a new statement with an amount negative", async () => {
+    const response = await request(app)
+      .post("/api/v1/statements/withdraw")
+      .send({
+        amount: -685,
+        description: "Withdraw",
+      })
+      .set({
+        Authorization: `Bearer ${token}`,
+      });
+    expect(response.status).toBe(400);
+  });
+
   it("should not be able to create a new statement with an nonexistent user", async () => {
     const response = await request(app)
       .post("/api/v1/statements/deposit")
