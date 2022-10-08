@@ -1,0 +1,327 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "FinApi",
+    "description": "Documentação da FinApi",
+    "version": "1.0.0",
+    "contact": {
+      "email": "natasha.oliveirabusiness@gmail.com"
+    }
+  },
+  "paths": {
+    "/api/v1/sessions": {
+      "post": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Autenticação de usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "email": "tul@ohoacaeji.yt",
+                  "password": "183091"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso."
+          },
+          "401": {
+            "description": "E-mail ou senha está incorreto."
+          }
+        }
+      }
+    },
+    "/api/v1/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Cria um novo usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/user"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso."
+          },
+          "400": {
+            "description": "Usuário já cadastrado."
+          }
+        }
+      }
+    },
+    "/api/v1/profile": {
+      "get": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Obtém os dados do usuário",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso."
+          },
+          "401": {
+            "description": "Token inválido."
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          }
+        }
+      }
+    },
+    "/api/v1/statements/balance": {
+      "get": {
+        "tags": [
+          "Statements"
+        ],
+        "summary": "Obtém o extrato da conta",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso."
+          },
+          "401": {
+            "description": "Token inválido."
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          }
+        }
+      }
+    },
+    "/api/v1/statements/deposit": {
+      "post": {
+        "tags": [
+          "Statements"
+        ],
+        "summary": "Realiza um novo depósito",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/statement"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso."
+          },
+          "400": {
+            "description": "Saldo insuficiente."
+          },
+          "401": {
+            "description": "Token inválido."
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          }
+        }
+      }
+    },
+    "/api/v1/statements/withdraw": {
+      "post": {
+        "tags": [
+          "Statements"
+        ],
+        "summary": "Realiza um novo saque",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/statement"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso."
+          },
+          "400": {
+            "description": "Saldo insuficiente."
+          },
+          "401": {
+            "description": "Token inválido."
+          },
+          "404": {
+            "description": "Usuário não encontrado."
+          }
+        }
+      }
+    },
+    "/api/v1/statements/{id}": {
+      "get": {
+        "tags": [
+          "Statements"
+        ],
+        "summary": "Obtém os detalhes de uma operação.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID da operação",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso."
+          },
+          "401": {
+            "description": "Token inválido."
+          },
+          "404": {
+            "description": "Usuário ou operação não encontrado."
+          }
+        }
+      }
+    },
+    "/api/v1/statements/transfers/{user_id}": {
+      "post": {
+        "tags": [
+          "Statements"
+        ],
+        "summary": "Realiza uma transferência.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID do usuário beneficiário",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/statement"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Saldo insuficiente."
+          },
+          "401": {
+            "description": "Token inválido."
+          },
+          "404": {
+            "description": "Destinatário não encontrado."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "statement": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "amount": 0,
+        "description": "Operação"
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "name": "Frances Perkins",
+        "email": "tul@ohoacaeji.yt",
+        "password": "183091"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
