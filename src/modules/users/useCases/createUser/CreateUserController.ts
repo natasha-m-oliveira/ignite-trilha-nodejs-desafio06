@@ -1,3 +1,4 @@
+import { ProfileMap } from "@modules/users/mappers/ProfileMap";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -15,6 +16,8 @@ export class CreateUserController {
       password,
     });
 
-    return response.status(201).json(user);
+    const profileDTO = ProfileMap.toDTO(user);
+
+    return response.status(201).json(profileDTO);
   }
 }

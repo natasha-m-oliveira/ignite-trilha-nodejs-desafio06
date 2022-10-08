@@ -1,3 +1,4 @@
+import { StatementMap } from "@modules/statements/mappers/StatementMap";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -17,6 +18,8 @@ export class GetStatementOperationController {
       statement_id,
     });
 
-    return response.json(statementOperation);
+    const statementDTO = StatementMap.toDTO(statementOperation);
+
+    return response.json(statementDTO);
   }
 }

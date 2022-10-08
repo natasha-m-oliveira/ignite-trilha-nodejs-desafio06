@@ -48,7 +48,7 @@ describe("Get Statement Operation", () => {
       });
 
     expect(response.status).toBe(200);
-    expect(response.body.amount).toBe("100.00");
+    expect(response.body.amount).toBe(100);
     expect(response.body.description).toBe("Event");
   });
 

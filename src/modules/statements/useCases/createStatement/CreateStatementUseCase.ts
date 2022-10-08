@@ -22,6 +22,10 @@ export class CreateStatementUseCase {
     amount,
     description,
   }: ICreateStatementDTO): Promise<Statement> {
+    if (amount <= 0) {
+      throw new CreateStatementError.InvalidAmount();
+    }
+
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {

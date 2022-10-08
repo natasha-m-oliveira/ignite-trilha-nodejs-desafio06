@@ -9,9 +9,15 @@ export namespace CreateTransferError {
     }
   }
 
+  export class InvalidAmount extends AppError {
+    constructor() {
+      super("Invalid amount");
+    }
+  }
+
   export class InsufficientFunds extends AppError {
     constructor() {
-      super("Insufficient funds", 400);
+      super("Insufficient funds");
     }
   }
 }
