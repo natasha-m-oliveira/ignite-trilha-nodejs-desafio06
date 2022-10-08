@@ -264,7 +264,7 @@
         },
         "responses": {
           "201": {
-            "description": "Success"
+            "description": "Operação realizada com sucesso."
           },
           "400": {
             "description": "Saldo insuficiente ou quantia inválida."
