@@ -3,13 +3,15 @@ import "express-async-errors";
 
 import createConnection from "@/database";
 import cors from "cors";
+import * as dotenv from "dotenv";
 import express from "express";
 
-import "./shared/container";
+import "@shared/container";
 import { AppError } from "@shared/errors/AppError";
 
 import { router } from "./routes";
 
+dotenv.config();
 void createConnection();
 
 const app = express();
